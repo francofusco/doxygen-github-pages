@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cstring>
+#include <string>
 
 /// Main project namespace.
 namespace foobar {
@@ -14,6 +14,6 @@ void hello(const std::string& who);
 /// Performs the most common programming action.
 /** This method print the iconic `Hello, World!` sentence on the console.
   */
-inline void helloWorld() { sayHello("World"); }
+inline void helloWorld() { hello("World"); }
 
 }
