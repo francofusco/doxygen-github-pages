@@ -19,13 +19,14 @@ jobs:
     # Create the build space.
     - name: Create build directory
       working-directory: ${{github.workspace}}
-      run: pwd && mkdir ${{github.workspace}}/build
+      run: mkdir ${{github.workspace}}/build
     # Configure CMake.
     - name: Invoke CMake
-      working-directory: ${{github.workspace}}
+      working-directory: ${{github.workspace}}/build
       run: cmake .. -DBUILD_DOC=ON -DQUIET_DOXYGEN=NO
     # Run Doxygen to create the documentation.
     - name: Build documentation using Doxygen
+      working-directory: ${{github.workspace}}/build
       run: cmake --build . --target doc
     # Deploy the documentation to GitHub Pages.
     - name: Deploy documentation.
