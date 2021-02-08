@@ -2,16 +2,25 @@ name: build-documentation
 on: [push]
 jobs:
   cmake-build:
+    # target OS
     runs-on: ubuntu-latest
+    # make sure we are in the build folder by default
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{github.workspace}}/build
+
     steps:
     - uses: actions/checkout@v2
+
+    - name: Check repo
+      working-directory: ${{github.workspace}}
+      run: ls
 
     - name: Create build directory
       run: pwd && mkdir ${{github.workspace}}/build
 
     - name: Check current directory
-      shell: bash
-      working-directory: ${{github.workspace}}/build
       run: pwd
 
     # - name: Invoke CMake
@@ -19,19 +28,3 @@ jobs:
     #
     # - name: Build documentation using Doxygen
     #   run: cmake --build . --target doc
-
-  cmake-build-change-defaults:
-    defaults:
-      run:
-        shell: bash
-        working-directory: ${{github.workspace}}/build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Create build directory
-      working-directory: ${{github.workspace}}
-      run: pwd && mkdir ${{github.workspace}}/build
-
-    - name: Check current directory
-      run: pwd
