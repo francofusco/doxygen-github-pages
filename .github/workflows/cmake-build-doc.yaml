@@ -4,7 +4,7 @@ jobs:
   cmake-build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checout@v2
+    - uses: actions/checkout@v2
 
     - name: Create build directory
       run: pwd && mkdir ${{github.workspace}}/build && cd ${{github.workspace}}/build && pwd
