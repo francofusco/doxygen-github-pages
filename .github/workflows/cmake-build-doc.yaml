@@ -1,7 +1,8 @@
 name: build-documentation
 on: [push]
 jobs:
-  cmake-build:
+  make-docs:
+    # Run this action only on the main branch
     if: contains('refs/heads/main', github.ref)
     # Target OS: Ubuntu.
     runs-on: ubuntu-latest
