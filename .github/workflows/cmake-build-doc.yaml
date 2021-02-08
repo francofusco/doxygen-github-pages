@@ -2,13 +2,14 @@ name: build-documentation
 on: [push]
 jobs:
   cmake-build:
+    if: contains('refs/heads/main', github.ref)
     # Target OS: Ubuntu.
     runs-on: ubuntu-latest
     # Use bash for all commands.
     defaults:
       run:
         shell: bash
-
+    # Set of commands to be run.
     steps:
     # Install CMake and Doxygen.
     - name: Install dependencies
@@ -30,4 +31,7 @@ jobs:
       run: cmake --build . --target doc
     # Deploy the documentation to GitHub Pages.
     - name: Deploy documentation.
-      run: echo "[DEPLOY DOC!]"
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{secrets.GITHUB_TOKEN}}
+        publish_dir: ${{github.workspace}}/doc/html
