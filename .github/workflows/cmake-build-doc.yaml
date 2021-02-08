@@ -2,29 +2,31 @@ name: build-documentation
 on: [push]
 jobs:
   cmake-build:
-    # target OS
+    # Target OS: Ubuntu.
     runs-on: ubuntu-latest
-    # make sure we are in the build folder by default
+    # Use bash for all commands.
     defaults:
       run:
         shell: bash
-        working-directory: ${{github.workspace}}/build
 
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Check repo
+    # Install CMake and Doxygen.
+    - name: Install dependencies
       working-directory: ${{github.workspace}}
-      run: ls
-
+      run: sudo apt install cmake doxygen
+    # Clone the repository.
+    - uses: actions/checkout@v2
+    # Create the build space.
     - name: Create build directory
+      working-directory: ${{github.workspace}}
       run: pwd && mkdir ${{github.workspace}}/build
-
-    - name: Check current directory
-      run: pwd
-
-    # - name: Invoke CMake
-    #   run: cmake .. -DBUILD_DOC=ON -DQUIET_DOXYGEN=NO
-    #
-    # - name: Build documentation using Doxygen
-    #   run: cmake --build . --target doc
+    # Configure CMake.
+    - name: Invoke CMake
+      working-directory: ${{github.workspace}}
+      run: cmake .. -DBUILD_DOC=ON -DQUIET_DOXYGEN=NO
+    # Run Doxygen to create the documentation.
+    - name: Build documentation using Doxygen
+      run: cmake --build . --target doc
+    # Deploy the documentation to GitHub Pages.
+    - name: Deploy documentation.
+      run: echo "[DEPLOY DOC!]"
